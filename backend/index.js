@@ -7,6 +7,7 @@ dotenv.config();
 import connectDB from "./config/db.js";
 //routes
 import userRoutes from "./routes/userRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRoutes);
+app.use("/api/applications", applicationRoutes);
 
 app.listen(PORT, () => {
   connectDB();
