@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   // Login
   const login = (newToken, userData) => {
     setToken(newToken);
-    setUser(userData);
+    setUser(userData)
   };
 
   // Logout
