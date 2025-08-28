@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Applications from "./pages/Applications";
 import Analytics from "./pages/Analytics";
 
 // Private Route Component
