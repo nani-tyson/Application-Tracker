@@ -10,7 +10,7 @@ export const addApplication = async (req, res) => {
       role,
       yearsOfExperience,
       resumeLink,
-      createdBy: req.user.id, 
+      createdBy: req.user.id,
     });
 
     await application.save();
@@ -31,8 +31,14 @@ export const getApplications = async (req, res) => {
     if (status) filter.status = status;
     if (minExp || maxExp) {
       filter.yearsOfExperience = {};
-      if (minExp) filter.yearsOfExperience.$gte = Number(minExp);
-      if (maxExp) filter.yearsOfExperience.$lte = Number(maxExp);
+      if (minExp && !isNaN(minExp))
+        filter.yearsOfExperience.$gte = Number(minExp);
+      if (maxExp && !isNaN(maxExp))
+        filter.yearsOfExperience.$lte = Number(maxExp);
+
+      // Remove object if empty
+      if (Object.keys(filter.yearsOfExperience).length === 0)
+        delete filter.yearsOfExperience;
     }
 
     const skip = (Number(page) - 1) * Number(limit);
@@ -56,7 +62,6 @@ export const getApplications = async (req, res) => {
   }
 };
 
-
 // Update application status (drag & drop)
 export const updateStatus = async (req, res) => {
   try {
@@ -69,7 +74,8 @@ export const updateStatus = async (req, res) => {
       { new: true }
     );
 
-    if (!application) return res.status(404).json({ message: "Application not found" });
+    if (!application)
+      return res.status(404).json({ message: "Application not found" });
 
     res.json(application);
   } catch (error) {
@@ -87,7 +93,8 @@ export const deleteApplication = async (req, res) => {
       createdBy: req.user.id,
     });
 
-    if (!application) return res.status(404).json({ message: "Application not found" });
+    if (!application)
+      return res.status(404).json({ message: "Application not found" });
 
     res.json({ message: "Application deleted successfully" });
   } catch (error) {
